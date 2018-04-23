@@ -1,0 +1,26 @@
+<template name='listShow'>
+  <view class='container'>
+    <view class="title">{{title}}</view>
+    <view class="content list_show"> 
+      <view class='first'>
+        <view class='img'>
+          <image src='https:{{first.book_url}}'></image>
+        </view>
+        <view class='info'>
+          <view class='title'>
+            {{first.book_name}} 
+          </view>
+          <view class='summary'>[{{first.book_end_status ? '已完结' : '连载中'}}]：{{first.book_short_intro}}</view>
+          <view class='attr'>
+            <text>{{first.author_name}}</text>
+            <text class='right'>{{first.book_word_count}}</text>
+            <text class='right'>{{first.book_category}}</text>
+          </view>
+        </view>
+      </view> 
+      <view class='list' wx:for='{{list}}' wx:key='{{index}}' style='{{index == 2 ? "color: #ff6060" : ""}}'>
+        {{item.book_short_intro}}
+      </view>
+    </view> 
+  </view>
+</template>

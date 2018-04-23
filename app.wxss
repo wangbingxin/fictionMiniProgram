@@ -1,0 +1,43 @@
+/**app.wxss**/
+page{
+  background-color: #f7f7f7;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.header{
+  height: 90rpx;
+  background-color: #fff;
+}
+.container{
+  background-color: #fff;
+  padding: 25rpx;
+  margin-top: 20rpx;
+}
+.container .title{
+  font-weight: bold;
+}
+
+/* 图片列表模板样式 */
+.img_show{
+  display: flex;
+  flex-flow: wrap; 
+}
+.img_show .item{
+  width: 200rpx;
+  margin-right: 50rpx; 
+  margin-top: 25rpx;
+}
+ .img_show .item:nth-child(3n){
+  margin-right: 0;
+} 
+.img_show image{
+  width: 200rpx;
+  height: 267rpx;
+  border-radius: 8rpx;
+}
+.img_show .name{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

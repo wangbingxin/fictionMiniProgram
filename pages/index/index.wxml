@@ -1,0 +1,29 @@
+<!--index.wxml-->
+<import src='../template/imgShow/imgShow.wxml' />
+<import src='../template/listShow/listShow.wxml' />
+<import src='../template/rankList/rankList.wxml' />
+<view class='header'><image src='../../images/logo_nv.png'></image></view>
+<swiper indicator-dots='true' autoplay='true' circular='true'>
+  <block wx:for='{{loopImgs}}' wx:key='{{index}}'>
+    <swiper-item>
+      <image src='https:{{item.banner}}'></image>
+    </swiper-item>
+  </block>
+</swiper>
+<template is='imgShow' data='{{title: "主编力荐", data: moduleOneData}}'></template>
+<template is='listShow' data='{{title: "热门畅销", first: moudleTwoFirst, list: moduleTwoData }}'></template>
+<template is='imgShow' data='{{title: "短篇推荐", data: moduleThreeData}}'></template>
+<template is='listShow' data='{{title: "新书推荐", first: moudleFourFirst, list: moduleFourData }}'></template>
+<template is='rankList' data='{{title: "短篇推荐", data: null}}'></template>
+   <!-- <view class='userinfo'>
+    <button wx:if='{{!hasUserInfo && canIUse}}' open-type='getUserInfo' bindgetuserinfo='getUserInfo'> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap='bindViewTap' class='userinfo-avatar' src='{{userInfo.avatarUrl}}' background-size='cover'></image>
+      <text class='userinfo-nickname'>{{userInfo.nickName}}</text>
+      <view wx:for='{{bookList}}'>{{item.banner_name}}</view>
+    </block>
+  </view>
+  <view class='usermotto'>
+    <text class='user-motto'>{{motto}}</text>
+  </view>  -->
+

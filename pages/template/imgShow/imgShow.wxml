@@ -1,0 +1,13 @@
+<template name='imgShow'>
+  <view class='container'>
+    <view class='title'>{{title}}</view>
+    <view class='content img_show'>
+      <view class='item' wx:for='{{data}}' wx:key='{{index}}'>
+        <navigator url='../book/book'>
+          <image src="https:{{item.book_url}}"></image>
+          <view class='name'>{{item.book_name}}</view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+</template>
