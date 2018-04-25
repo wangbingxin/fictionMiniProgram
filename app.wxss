@@ -21,7 +21,7 @@ page{
 /* 图片列表模板样式 */
 .img_show{
   display: flex;
-  flex-flow: wrap; 
+  flex-flow: wrap;
 }
 .img_show .item{
   width: 200rpx;

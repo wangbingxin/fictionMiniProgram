@@ -1,8 +1,0 @@
-<template name='rankList'>
-  <view class='container'>
-    <view class='title'>排行榜</view>
-    <view class='content'>
-      
-    </view>
-  </view>
-</template>

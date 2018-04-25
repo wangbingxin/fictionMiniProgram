@@ -1,8 +1,7 @@
 <!--index.wxml-->
 <import src='../template/imgShow/imgShow.wxml' />
 <import src='../template/listShow/listShow.wxml' />
-<import src='../template/rankList/rankList.wxml' />
-<view class='header'><image src='../../images/logo_nv.png'></image></view>
+<view class='header'></view>
 <swiper indicator-dots='true' autoplay='true' circular='true'>
   <block wx:for='{{loopImgs}}' wx:key='{{index}}'>
     <swiper-item>
@@ -14,16 +13,17 @@
 <template is='listShow' data='{{title: "热门畅销", first: moudleTwoFirst, list: moduleTwoData }}'></template>
 <template is='imgShow' data='{{title: "短篇推荐", data: moduleThreeData}}'></template>
 <template is='listShow' data='{{title: "新书推荐", first: moudleFourFirst, list: moduleFourData }}'></template>
-<template is='rankList' data='{{title: "短篇推荐", data: null}}'></template>
-   <!-- <view class='userinfo'>
-    <button wx:if='{{!hasUserInfo && canIUse}}' open-type='getUserInfo' bindgetuserinfo='getUserInfo'> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap='bindViewTap' class='userinfo-avatar' src='{{userInfo.avatarUrl}}' background-size='cover'></image>
-      <text class='userinfo-nickname'>{{userInfo.nickName}}</text>
-      <view wx:for='{{bookList}}'>{{item.banner_name}}</view>
-    </block>
+<view class='container'>
+  <view class='title'>排行榜
+    <view class='tabs'>
+      <text wx:for='{{tabNames}}' class='{{current==index?"current":""}}' data-index='{{index}}' bindtap='switchTab' wx:key='index'>{{item}}</text>
+    </view>
   </view>
-  <view class='usermotto'>
-    <text class='user-motto'>{{motto}}</text>
-  </view>  -->
-
+  <view class='content rank'>
+    <navigator url='../book/book?book_id={{item.book_id}}' wx:for='{{rankList}}' wx:key='{{index}}' class='list'>
+      <view class='item1' style='{{index<=3?"background-image:url(../../images/rank_top.png)":"background-image:url(../../images/rank_num.png)"}}'>{{index+1}}</view>
+      <view class='item2'>{{item.book_name}}</view>
+      <view class='item3'>{{item.count}}</view>
+    </navigator>
+  </view>
+</view>

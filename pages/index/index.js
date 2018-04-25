@@ -2,27 +2,23 @@
 //获取应用实例
 const app = getApp()
 
+import { request } from '../../utils/util'
+import { getRecommend, getClickRank, getSubscribeRank, getNewRank } from '../../config/api'
+
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    loopImgs:[],
+    tabNames:['点击榜','订阅榜','新书榜'],
+    current: 0,
+    loopImgs: [],
     moduleOneData: [],
-    moduleTwoData:[],
-    moudleTwoFirst:{},
+    moduleTwoData: [],
+    moudleTwoFirst: {},
     moduleThreeData: [],
     moduleFourData: [],
     moudleFourFirst: {},
-    rankList:[]
+    rankList: []
   },
   //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
   toBook: function () {
     console.log(getCurrentPages())
     wx.navigateTo({
@@ -30,90 +26,103 @@ Page({
     })
   },
   onLoad: function () {
-    let _this =this
-    wx.request({
-      url: 'https://wh.yueloo.com.cn/v1.0/h5_img_show?sex=1',
-      success:function(res){
-        _this.setData({
-          loopImgs: res.data.data
-        })
-      }
-    })
-    wx.request({
-      url: 'https://wh.yueloo.com.cn/v1.0/mobile_editor_selected?sex=1',
-      success: res=>{
-        _this.setData({
-          moduleOneData: res.data.data
-        })
-      }
-    })
-    wx.request({
-      url: 'https://wh.yueloo.com.cn/v1.0/mobile_book_live?sex=1',
-      success: res => {
-        _this.setData({
-          moudleTwoFirst: res.data.data[0],
-          moduleTwoData: res.data.data.slice(1)
-        })
-      }
-    })
-    wx.request({
-      url: 'https://wh.yueloo.com.cn/v1.0/mobile_editor_recommend?sex=1',
-      success: res => {
-        _this.setData({
-          moduleThreeData: res.data.data
-        })
-      }
-    })
-    wx.request({
-      url: 'https://wh.yueloo.com.cn/v1.0/mobile_new_book_recommend?sex=1',
-      success: res => {
-        _this.setData({
-          moudleFourFirst: res.data.data[0],
-          moduleFourData: res.data.data.slice(1)
-        })
-      }
-    })
-    wx.request({
-      url: 'https://wh.yueloo.com.cn/v1.0/click_book?sex=1',
-      success: function (res) {
-        _this.setData({
-          rankList: res.data.data
-        })
-      }
-    })
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+    this.getIndexData()
+    this.getClick()
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+  switchTab(e){
+    let index=e.target.dataset.index
+    if(this.data.current!=index){
+      if(index==0){
+        this.getClick()
+      } else if (index == 1){
+        this.getSubscribe()
+      }else if(index==2){
+        this.getNew()
+      }
+    }
+    
+  },
+  // 获取首页接口数据
+  getIndexData() {
+    // 获取轮播图
+    request(getRecommend, {
+      sex: 1,
+      template_name: 'top'
+    }).then(res => {
+      this.setData({
+        loopImgs: res.data
+      })
+    })
+    // 获取主编力荐
+    request(getRecommend, {
+      sex: 1,
+      template_name: 'recommend'
+    }).then(res => {
+      this.setData({
+        moduleOneData: res.data
+      })
+    })
+    // 获取热门畅销
+    request(getRecommend, {
+      sex: 1,
+      template_name: 'hot'
+    }).then(res => {
+      this.setData({
+        moduleTwoData: res.data.slice(1),
+        moudleTwoFirst: res.data[0]
+      })
+    })
+    // 获取短篇推荐
+    request(getRecommend, {
+      sex: 1,
+      template_name: 'short'
+    }).then(res => {
+      this.setData({
+        moduleThreeData: res.data
+      })
+    })
+    // 获取新书推荐
+    request(getRecommend, {
+      sex: 1,
+      template_name: 'new'
+    }).then(res => {
+      this.setData({
+        moduleFourData: res.data.slice(1),
+        moudleFourFirst: res.data[0]
+      })
+    })
+  },
+  // 获取点击榜
+  getClick(){
+    request(getClickRank, {
+      sex: 1
+    }).then(res => {
+      this.setData({
+        rankList: res.data,
+        current:0
+      })
+    })
+  },
+  // 获取订阅榜
+  getSubscribe() {
+    request(getSubscribeRank, {
+      sex: 1
+    }).then(res => {
+      this.setData({
+        rankList: res.data,
+        current: 1
+      })
+    })
+  },
+  // 获取新书榜
+  getNew() {
+    request(getNewRank, {
+      sex: 1
+    }).then(res => {
+      this.setData({
+        rankList: res.data,
+        current: 2
+      })
     })
   }
 })

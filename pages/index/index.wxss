@@ -1,33 +1,56 @@
 /**index.wxss**/
 @import '../template/listShow/listShow.wxss';
-.header image{
-  width: 180rpx;
-   height: 80rpx;  
-}
-swiper{
+
+swiper {
   height: 270rpx;
 }
-swiper image{
+
+swiper image {
   width: 750rpx;
   height: 270rpx;
 }
-/* .userinfo {
+
+.title .tabs {
+  float: right;
+  width: 280rpx;
+  font-weight: normal;
+  text-align: right;
+}
+.title .tabs text{
+  margin-left: 15rpx;
+}
+.title .tabs .current{
+  color:#ff6060;
+}
+
+.rank .list {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-flow: wrap;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: solid 2rpx #ebebeb;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.rank .list:last-child {
+  border-bottom: none;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+.rank .list .item1 {
+  flex-basis: 40rpx;
+  color: #fff;
+  text-align: center;
+  margin-right: 15rpx;
+  background-size: 40rpx;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.usermotto {
-  margin-top: 200px;
-} */
+.rank .list .item2 {
+  flex-basis: 545rpx;
+}
+
+.rank .list .item3 {
+  flex-basis: 100rpx;
+  text-align: right;
+  color: #999;
+}

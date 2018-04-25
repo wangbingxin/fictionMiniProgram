@@ -1,3 +1,6 @@
+/**
+ * 格式化日期时间
+ */
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -14,6 +17,36 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-module.exports = {
-  formatTime: formatTime
+/**
+ * 封装请求数据接口
+ */
+const request = (url, params={}, method = 'GET') => {
+  return new Promise((resolve,reject)=>{
+    wx.request({
+      url: url,
+      method: method,
+      data: params,
+      success: res => {
+        let code=res.data.code
+        switch(code){
+          case 401:
+            console.log('未登录')
+            break
+          default:
+            resolve(res.data)
+        }
+      },
+      fail:err=>{
+        reject(err)
+      }
+    })
+  })
+}
+
+// module.exports = {
+//   formatTime: formatTime
+// }
+export{
+  formatTime,
+  request
 }
